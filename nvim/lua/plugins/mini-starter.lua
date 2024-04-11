@@ -13,6 +13,9 @@ require('mini.sessions').setup({
 vim.keymap.set('n', '<leader>ss', mini_sessions.select, {noremap=true, silent=true})
 vim.keymap.set('n', '<leader>sm', function ()
   local session_name = vim.fn.input('session file name: ')
+  if session_name == "" then
+    return
+  end
   mini_sessions.write(session_name)
 end, {noremap=true})
 vim.keymap.set('n', '<leader>sd', function ()
