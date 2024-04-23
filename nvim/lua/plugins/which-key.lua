@@ -67,7 +67,7 @@ wk.register({
     S = { "Telescope git stash" },
   },
   c = {
-    p = { "copy full path of current buffer into \"" }
+    p = { "copy full path of current buffer into system clipboard" }
   },
   ["\\"] = { "New empty buffer to the right" },
   ["-"] = { "New empty buffer below" },

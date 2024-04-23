@@ -33,7 +33,7 @@ keymap("n", "<leader>\\", ":rightbelow vnew<CR>", opts)
 keymap("n", "<leader>-", ":rightbelow new<CR>", opts)
 
 -- copy buffer path
-keymap("n", "<leader>cp", ':let @" = expand("%:p")<CR>', opts)
+keymap("n", "<leader>cp", ':let @+ = expand("%:p")<CR>', opts)
 
 -- convenience for diffview (merge conflict resolution)
 keymap("n", "<leader>hP", ':diffput<CR>', opts)
