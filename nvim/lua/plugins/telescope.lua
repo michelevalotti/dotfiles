@@ -30,13 +30,13 @@ t.setup({
     {
       mappings = {
         n = {
-          ["<C-p>"] = action_layout.toggle_preview,
+          ["<C-w>"] = action_layout.toggle_preview,
           ["q"] = actions.close,
           ["l"] = actions.results_scrolling_right,
           ["h"] = actions.results_scrolling_left,
         },
         i = {
-          ["<C-p>"] = action_layout.toggle_preview,
+          ["<C-w>"] = action_layout.toggle_preview,
         },
       },
       path_display = { "smart" },
