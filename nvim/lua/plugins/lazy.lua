@@ -72,4 +72,11 @@ require('lazy').setup({
     'refractalize/oil-git-status.nvim',
     dependencies = { 'oil.nvim' },
   },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+  },
 })
