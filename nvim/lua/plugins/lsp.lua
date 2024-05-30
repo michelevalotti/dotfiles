@@ -3,7 +3,6 @@ local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
-local lspsaga = require('lspsaga')
 local lspkind = require('lspkind')
 require('luasnip.loaders.from_vscode').lazy_load()
 
@@ -97,11 +96,3 @@ cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
     { name = "dap" },
   },
 })
-
-lspsaga.setup({
-  lightbulb = {
-    enable = false,
-  },
-})
-vim.keymap.set('n', '<leader>lo', '<cmd>Lspsaga outline<CR>')
-vim.keymap.set('n', '<leader>lp', '<cmd>Lspsaga peek_definition<CR>')

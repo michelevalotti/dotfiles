@@ -40,7 +40,6 @@ require('lazy').setup({
     }
   },
   'RRethy/vim-illuminate',
-  'nvimdev/lspsaga.nvim',
   'folke/neodev.nvim',
   'mfussenegger/nvim-dap',
   'mfussenegger/nvim-dap-python',

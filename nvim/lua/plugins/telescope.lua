@@ -75,6 +75,8 @@ vim.keymap.set('n', '<leader>dr', t.extensions.dap.frames, opts)
 
 vim.keymap.set('n', '<leader>lr', builtin.lsp_references, opts)
 vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
+vim.keymap.set('n', '<leader>lp', function() builtin.lsp_definitions({jump_type = 'never' }) end, opts)
+vim.keymap.set('n', '<leader>lo', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>ld', function() builtin.diagnostics{bufnr=0} end, opts)
 vim.keymap.set('n', '<leader>la', builtin.diagnostics, opts)
 
