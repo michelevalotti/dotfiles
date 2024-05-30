@@ -21,13 +21,17 @@ table.insert(dap.configurations.python, {
   name = 'python current dir with args',
   program = '${file}',
   cwd = vim.fn.getcwd(),
-  args = {
-    '-linescan_paths',
-    'mnt/c/Users/michele.valotti/Downloads/u Lens Line scan/20240320_122754_1E silicon line scan/BIN/-40 um/H10430_240320_130535_CH1_Regrid.bin,mnt/c/Users/michele.valotti/Downloads/u Lens Line scan/20240320_122754_1E silicon line scan/BIN/-40 um/H10430_240320_130535_CH1_Regrid.bin',
-    '-linescan_dist_um','80',
-    '-fast_scan_size_um','100',
-    '-fast_scan_size_um','3.125',
-  },
+  args = function()
+    local args_t = {}
+    local pair = vim.fn.input("enter --flag=value pair (or CR to start execution): ")
+    while pair ~= "" do
+      for s in string.gmatch(pair, "[^=]+") do
+        table.insert(args_t,s)
+      end
+      pair = vim.fn.input("enter --flag=value pair (or CR to start execution): ")
+    end
+    return args_t
+  end
 })
 
 table.insert(dap.configurations.python, {
