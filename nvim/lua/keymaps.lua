@@ -18,6 +18,11 @@ keymap("n", "<M-l>", ":bnext<CR>", opts)
 keymap("n", "<M-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>p", "<C-^>", opts)  -- switch to previous buffer
 
+-- Navigate tabs
+keymap("n", "<leader>tn", ":tabnext<CR>", opts)
+keymap("n", "<leader>tp", ":tabprevious<CR>", opts)
+keymap("n", "<leader>tc", ":tabclose<CR>", opts)
+
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
