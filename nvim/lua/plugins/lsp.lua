@@ -36,7 +36,10 @@ local lua_opts = lsp_zero.nvim_lua_ls({ settings = { Lua = { completion = { call
 require('lspconfig').lua_ls.setup(lua_opts)
 
 -- docstring in floating window after ( typed
-require('lsp_signature').setup({hint_prefix=""})
+require('lsp_signature').setup({
+  hint_prefix="",
+  floating_window_above_cur_line=true,
+})
 
 -- highlight references of symbol under cursor (a-n and a-p to move between them)
 require('illuminate').configure({
