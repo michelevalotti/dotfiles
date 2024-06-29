@@ -14,8 +14,8 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap("n", "<M-l>", ":bnext<CR>", opts)
+keymap("n", "<M-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>p", "<C-^>", opts)  -- switch to previous buffer
 
 -- Resize with arrows
