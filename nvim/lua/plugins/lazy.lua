@@ -42,7 +42,7 @@ require('lazy').setup({
   'RRethy/vim-illuminate',
   'folke/neodev.nvim',
   'mfussenegger/nvim-dap',
-  'mfussenegger/nvim-dap-python',
+  'jay-babu/mason-nvim-dap.nvim',
   {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -54,7 +54,6 @@ require('lazy').setup({
   'folke/which-key.nvim',
   'lewis6991/gitsigns.nvim',
   'tpope/vim-fugitive',
-  'numToStr/Comment.nvim',
   'windwp/nvim-autopairs',
   {
     'echasnovski/mini.starter',
@@ -78,4 +77,5 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
     },
   },
+  'ofirgall/goto-breakpoints.nvim',
 })
