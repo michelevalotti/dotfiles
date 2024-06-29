@@ -78,3 +78,8 @@ end)
 vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
   widgets.hover()
 end)
+
+local gt_bp = require('goto-breakpoints')
+vim.keymap.set('n', ']b', gt_bp.next, {desc = 'Next breakpoint'})
+vim.keymap.set('n', '[b', gt_bp.prev, {desc = 'Previous breakpoint'})
+vim.keymap.set('n', ']S', gt_bp.stopped, {desc = 'Go to stopped debug line'})
