@@ -1,5 +1,4 @@
 local tt = require('toggleterm')
-local terms = require("toggleterm.terminal")
 tt.setup({
   close_on_exit = false,
   shade_terminals = true,
@@ -29,8 +28,7 @@ vim.keymap.set('n', '\\ts', ':TermSelect<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '\\ch', ':ToggleTerm<CR>:ToggleTerm direction=horizontal<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '\\cv', ':ToggleTerm<CR>:ToggleTerm direction=vertical<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '\\cf', ':ToggleTerm<CR>:ToggleTerm direction=float<CR>', { noremap = true, silent = true})
-local id = terms.get_toggled_id()
-vim.keymap.set("n", "\\p", ":w | TermExec cmd='python \"%:p\"'<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "\\p", ":w | TermExec cmd='python \"%:p\"'<CR>", { noremap = true, silent = true, desc = 'python execute current file' })
 
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
