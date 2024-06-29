@@ -1,47 +1,25 @@
 local dap = require('dap')
 local widgets = require('dap.ui.widgets')
-local handle = io.popen("which python")
-local python_path = handle:read("*a")
-handle:close()
-require('dap-python').setup(python_path)
+local mason_dap = require('mason-nvim-dap')
+dap.defaults.fallback.terminal_win_cmd = 'tabnew'
 
-table.insert(dap.configurations.python, {
-  -- https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for more parameters
-  type = 'python',
-  request = 'launch',
-  name = 'python current dir',
-  program = '${file}',
-  cwd = vim.fn.getcwd(),
-})
-
-table.insert(dap.configurations.python, {
-  -- https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for more parameters
-  type = 'python',
-  request = 'launch',
-  name = 'python current dir with args',
-  program = '${file}',
-  cwd = vim.fn.getcwd(),
-  args = function()
-    local args_t = {}
-    local pair = vim.fn.input("enter --flag=value pair (or CR to start execution): ")
-    while pair ~= "" do
-      for s in string.gmatch(pair, "[^=]+") do
-        table.insert(args_t,s)
-      end
-      pair = vim.fn.input("enter --flag=value pair (or CR to start execution): ")
-    end
-    return args_t
-  end
-})
-
-table.insert(dap.configurations.python, {
-  -- https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for more parameters
-  type = 'python',
-  request = 'launch',
-  name = 'python current dir (not justMyCode)',
-  program = '${file}',
-  cwd = vim.fn.getcwd(),
-  justMyCode = false,
+mason_dap.setup({
+  automatic_setup = true,
+  handlers = {
+    function(config)
+      mason_dap.default_setup(config)
+    end,
+    python = function(config)
+      config.configurations = require('plugins.dbg_configs.python')
+      mason_dap.default_setup(config)
+    end,
+    cppdbg = function(config)
+      config.configurations = require('plugins.dbg_configs.c')
+      mason_dap.default_setup(config)
+    end,
+  },
+  ensure_installed = {},
+  automatic_installation = false,
 })
 
 local function launch_wrapper(fn, opts)
