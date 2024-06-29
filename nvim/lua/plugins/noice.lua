@@ -16,6 +16,7 @@ vim.keymap.set("c", "<C-e>", function()
   noice.redirect(vim.fn.getcmdline())
 end, { desc = "Redirect Cmdline" })
 
+vim.opt.showmode = false  -- only show recording messages in lualine (not insert/visual mode)
 require("lualine").setup({
   sections = {
     lualine_x = {
