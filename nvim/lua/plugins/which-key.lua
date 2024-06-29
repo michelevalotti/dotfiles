@@ -48,7 +48,8 @@ wk.register({
     r = { "Telescope list references" },
     d = { "Telescope list buffer diagnostics" },
     a = { "Telescope list all diagnostics" },
-    o = { "Lspsaga buffer symbols outline" },
+    o = { "Telescope buffer symbols" },
+    p = { "Telescope peek definition" },
   },
   o = {
     D = { "toggle Oil float current buffer dir" },
