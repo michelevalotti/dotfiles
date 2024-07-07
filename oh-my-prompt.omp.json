@@ -6,7 +6,9 @@
           "bubble": "#dce0e8",
           "pink": "#ea76cb",
           "lavender": "#7287FD",
-          "blue":  "#1e66f5"
+          "blue":  "#1e66f5",
+          "teal": "#179299",
+          "yellow": "#df8e1d"
     },
     "blocks": [
       {
@@ -38,7 +40,7 @@
             "style": "diamond",
             "foreground": "p:lavender",
             "foreground_templates": [
-              "{{if contains \"*\" .Output}}#df8e1d{{end}}"
+              "{{if contains \"*\" .Output}}p:yellow{{end}}"
             ],
             "background": "p:bubble",
             "leading_diamond": " \ue0b6",
