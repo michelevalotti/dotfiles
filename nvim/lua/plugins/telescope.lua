@@ -18,8 +18,8 @@ t.setup({
           ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
         }
       },
-      theme = "dropdown",
-    }
+    },
+    builtin = { previewer = false }
   },
   defaults = vim.tbl_extend("force",
     themes.get_dropdown(),
