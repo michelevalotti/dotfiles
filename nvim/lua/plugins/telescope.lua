@@ -36,7 +36,9 @@ t.setup({
         },
       },
       path_display = { "smart" },
-  }),
+      file_ignore_patterns = { "%[dap%-repl*" },
+    }
+  ),
   extensions = {
     fzf = {
       fuzzy = false,                   -- false will only do exact matching
