@@ -7,10 +7,6 @@ local opts = {noremap = true, silent = true}
 
 t.setup({
   pickers = {
-    find_files = { theme = "dropdown" },
-    live_grep = { theme = "dropdown" },
-    help_tags = { theme = "dropdown" },
-    oldfiles = { theme = "dropdown" },
     buffers = {
       ignore_current_buffer = true,
       sort_mru = true,
@@ -42,18 +38,12 @@ t.setup({
       path_display = { "smart" },
   }),
   extensions = {
-    ["ui-select"] = {
-      themes.get_dropdown{}
-    },
     fzf = {
       fuzzy = false,                   -- false will only do exact matching
       override_generic_sorter = true,  -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
       case_mode = "smart_case",        -- "smart_case" (def) or "ignore_case" or "respect_case"
     },
-    dap = {
-      theme = "ivy",
-    }
   }
 })
 
