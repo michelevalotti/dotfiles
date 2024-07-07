@@ -36,6 +36,15 @@
             "type": "path"
           },
           {
+            "foreground": "p:teal",
+            "background": "p:bubble",
+            "leading_diamond": " \ue0b6",
+            "trailing_diamond": "\ue0b4",
+            "type": "python",
+            "style": "diamond",
+            "template": " {{ .Venv }}"
+          },
+          {
             "type": "command",
             "style": "diamond",
             "foreground": "p:lavender",
