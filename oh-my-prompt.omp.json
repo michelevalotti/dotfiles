@@ -1,0 +1,107 @@
+{
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "palette": {
+          "os": "#ACB0BE",
+          "closer": "p:os",
+          "bubble": "#dce0e8",
+          "pink": "#ea76cb",
+          "lavender": "#7287FD",
+          "blue":  "#1e66f5"
+    },
+    "blocks": [
+      {
+        "alignment": "left",
+        "newline": true,
+        "segments": [
+          {
+            "foreground": "p:os",
+            "style": "plain",
+            "template": "┌ ",
+            "type": "text"
+          },
+          {
+            "foreground": "p:pink",
+            "background": "p:bubble",
+            "leading_diamond": "\ue0b6",
+            "trailing_diamond": "\ue0b4",
+            "properties": {
+              "home_icon": "~",
+              "style": "agnoster_short",
+              "max_depth": 5
+            },
+            "style": "diamond",
+            "template": "{{ .Path }}",
+            "type": "path"
+          },
+          {
+            "type": "command",
+            "style": "diamond",
+            "foreground": "p:lavender",
+            "foreground_templates": [
+              "{{if contains \"*\" .Output}}#df8e1d{{end}}"
+            ],
+            "background": "p:bubble",
+            "leading_diamond": " \ue0b6",
+            "trailing_diamond": "\ue0b4",
+            "properties": {
+              "shell": "bash",
+              "command": "git branch --show-current 2>/dev/null && if [[ -n $(git status --porcelain) ]]; then echo \"*\" ;fi"
+            },
+            "template": "\ue725 {{ .Output }}"
+          },
+          {
+            "foreground": "p:lavender",
+            "properties": {
+              "always_enabled": true
+            },
+            "template": "{{ if eq .Code 0 }} \uf00c{{ else }} \uf071  {{ reason .Code }}{{ end }}",
+            "style": "plain",
+            "type": "status"
+          }
+        ],
+        "type": "prompt"
+      },
+      {
+        "alignment": "right",
+        "segments": [
+          {
+            "foreground": "p:blue",
+            "background": "p:bubble",
+            "leading_diamond": " \ue0b6",
+            "trailing_diamond": "\ue0b4",
+            "style": "diamond",
+            "template": "{{ .UserName }}@{{ .HostName }}",
+            "type": "session"
+          },
+          {
+            "style": "plain",
+            "template": "\u2000",
+            "type": "text"
+          }
+        ],
+        "type": "prompt"
+      },
+      {
+        "alignment": "left",
+        "newline": true,
+        "segments": [
+          {
+            "foreground": "p:os",
+            "style": "plain",
+            "template": "└ ",
+            "type": "text"
+          },
+          {
+            "style": "plain",
+            "foreground": "p:closer",
+            "template": "\uf105",
+            "type": "text"
+          }
+        ],
+        "type": "prompt"
+      }
+    ],
+    "final_space": true,
+    "version": 2
+  }
+  
