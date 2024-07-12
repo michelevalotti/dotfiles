@@ -42,6 +42,9 @@
             "trailing_diamond": "\ue0b4",
             "type": "python",
             "style": "diamond",
+            "properties": {
+              "home_enabled": true
+            },
             "template": " {{ .Venv }}"
           },
           {
