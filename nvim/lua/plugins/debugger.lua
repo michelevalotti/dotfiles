@@ -22,46 +22,17 @@ mason_dap.setup({
   automatic_installation = false,
 })
 
-local function launch_wrapper(fn, opts)
-  opts = opts or {}
-  vim.api.nvim_command('write')
-  local session_active = dap.session() ~= nil
-  local repl_open = false
-  for buf=1, vim.fn.bufnr('$') do
-    local is_listed = vim.fn.buflisted(buf)==1
-    if is_listed then
-      local bufname = vim.api.nvim_buf_get_name(buf)
-      local _, end_idx = string.find(bufname, '[dap-repl]')
-      local is_repl = end_idx==string.len(bufname)
-      if is_repl then
-        local is_open = vim.fn.getbufinfo(buf)[1].hidden==0
-        if is_open then
-          repl_open = true
-        end
-      end
-    end
-  end
-  if (not repl_open) and (not session_active) then
-    dap.repl.open({height=20})
-  end
-  if opts == {} then
-    fn()
-  else
-    fn(opts)
-  end
-end
-
-vim.keymap.set('n', '<leader>dk', function() launch_wrapper(dap.continue) end)
-vim.keymap.set('n', '<leader>dn', function() launch_wrapper(dap.continue, {new=true}) end)
-vim.keymap.set('n', '<leader>dl', function() launch_wrapper(dap.run_last) end)
-vim.keymap.set('n', '<leader>b', function() dap.toggle_breakpoint() end)
-vim.keymap.set('n', '<leader>do', function() dap.step_over() end)
-vim.keymap.set('n', '<leader>di', function() dap.step_into() end)
+vim.keymap.set('n', '<leader>dk', dap.continue)
+vim.keymap.set('n', '<leader>dn', function() dap.continue({new=true}) end)
+vim.keymap.set('n', '<leader>dl', dap.run_last)
+vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
+vim.keymap.set('n', '<leader>do', dap.step_over)
+vim.keymap.set('n', '<leader>di', dap.step_into)
 vim.keymap.set('n', '<leader>dK', function() vim.api.nvim_command('write'); dap.restart() end)
-vim.keymap.set('n', '<leader>dt', function() dap.terminate() end)
+vim.keymap.set('n', '<leader>dt', dap.terminate)
 vim.keymap.set('n', '<leader>dc', function() dap.repl.toggle({height=20}) end)
 vim.keymap.set('n', '<leader>dS', function() widgets.cursor_float(widgets.sessions) end)
-vim.keymap.set('n', '<leader>dF', function() dap.focus_frame() end)
+vim.keymap.set('n', '<leader>dF', dap.focus_frame)
 
 vim.api.nvim_create_autocmd( "FileType", {
   pattern = "dap-float",
@@ -78,6 +49,19 @@ end)
 vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
   widgets.hover()
 end)
+
+dap.listeners.after['event_exited']['close_repl'] = function ()
+  local n_sessions = 0
+  for _ in pairs(dap.sessions()) do n_sessions = n_sessions + 1 end
+  if n_sessions <= 1 then
+    dap.repl.close()
+  end
+end
+
+dap.listeners.after['event_initialized']['open_repl'] = function ()
+  vim.api.nvim_command('write')
+  dap.repl.open({height=20})
+end
 
 local gt_bp = require('goto-breakpoints')
 vim.keymap.set('n', ']b', gt_bp.next, {desc = 'Next breakpoint'})
