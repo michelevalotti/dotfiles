@@ -28,7 +28,7 @@ end
 oil.setup({
   columns = {
     { "size", highlight = "NonText" },
-    { "mtime", format = "%Y-%m-%d %X", highlight = "NonText"  },
+    { "mtime", format = "%Y-%m-%d %H:%M:%S", highlight = "NonText"  },
     { "permissions", highlight = "NonText"  },
     { "icon", highlight = "NonText"  },
   },
