@@ -1,0 +1,112 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# git status can be slow
+command_timeout = 10000
+
+palette = "catppuccin_latte"
+
+format = """
+[┌](fg:surface2)\
+$directory\
+$python\
+$conda\
+$git_branch$git_status\
+$status\
+$fill\
+$username$hostname\
+$line_break\
+[└](fg:surface2)\
+$character
+"""
+
+[directory]
+style = "bg:crust fg:pink"
+format = "[ ](fg:crust)[$path]($style)[](fg:crust)"
+truncate_to_repo = false
+truncation_length = -1
+
+[python]
+symbol = "󱔎"
+style = 'bg:crust fg:teal'
+format = '[ ](fg:crust)[$symbol $virtualenv]($style)[](fg:crust)'
+detect_files = []
+detect_extensions = []
+
+[conda]
+symbol = ''
+style = 'bg:crust fg:teal'
+format = '[ ](fg:crust)[$symbol $environment]($style)[](fg:crust)'
+ignore_base = false
+
+[git_branch]
+symbol = ''
+format = '[ ](fg:crust)[$symbol $branch]($style)'
+style = 'bg:crust fg:lavender'
+
+[git_status]
+format = '$deleted$renamed$modified$staged$untracked[](fg:crust)'
+deleted = '[ ](bg:crust fg:red)'
+renamed = '[ »](bg:crust fg:red)'
+modified = '[ ](bg:crust fg:red)'
+staged = '[ ](bg:crust fg:green)'
+untracked = '[ ](bg:crust fg:yellow)'
+
+[status]
+format = ' [$symbol$status $common_meaning$signal_name]($style)'
+symbol = ''
+success_symbol = ''
+not_executable_symbol = ''
+not_found_symbol = ''
+sigint_symbol = ''
+signal_symbol = ''
+style = 'fg:maroon'
+disabled = false
+
+[fill]
+symbol = ' '
+
+[username]
+show_always = true
+style_user = "bg:crust fg:subtext0"
+format = '[ ](fg:crust)[$user]($style)'
+
+[hostname]
+ssh_only = false
+style = "bg:crust fg:subtext0"
+format = '[@$hostname]($style)[](fg:crust)'
+
+[character]
+success_symbol = '[ ](surface2)'
+error_symbol = '[ ](maroon)'
+
+[palettes.catppuccin_latte]
+rosewater = "#dc8a78"
+flamingo = "#dd7878"
+pink = "#ea76cb"
+mauve = "#8839ef"
+red = "#d20f39"
+maroon = "#e64553"
+peach = "#fe640b"
+yellow = "#df8e1d"
+green = "#40a02b"
+teal = "#179299"
+sky = "#04a5e5"
+sapphire = "#209fb5"
+blue = "#1e66f5"
+lavender = "#7287fd"
+text = "#4c4f69"
+subtext1 = "#5c5f77"
+subtext0 = "#6c6f85"
+overlay2 = "#7c7f93"
+overlay1 = "#8c8fa1"
+overlay0 = "#9ca0b0"
+surface2 = "#acb0be"
+surface1 = "#bcc0cc"
+surface0 = "#ccd0da"
+base = "#eff1f5"
+mantle = "#e6e9ef"
+crust = "#dce0e8"
