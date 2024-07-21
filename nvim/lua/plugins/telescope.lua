@@ -19,7 +19,14 @@ t.setup({
         }
       },
     },
-    builtin = { previewer = false }
+    builtin = { previewer = false },
+    git_status = { use_file_path = true },
+    git_branches = { use_file_path = true },
+    git_files = { use_file_path = true },
+    git_stash = { use_file_path = true },
+    git_commits = { use_file_path = true },
+    git_bcommits = { use_file_path = true },
+    git_bcommits_range = { use_file_path = true },
   },
   defaults = vim.tbl_extend("force",
     themes.get_dropdown(),
