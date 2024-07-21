@@ -77,4 +77,5 @@ require('lazy').setup({
     },
   },
   'ofirgall/goto-breakpoints.nvim',
+  'romainl/vim-cool',
 })
