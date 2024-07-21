@@ -12,8 +12,8 @@ vim.o.signcolumn = "yes:1"  -- signcol always on and 1 char wide
 
 vim.o.expandtab = true
 vim.o.smartindent = true
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 vim.o.breakindent = true
 vim.o.undofile = true  -- enable persistent undo (undo history files saved to vim.o.undodir which defaults to "$XDG_STATE_HOME/nvim/undo//")
 
