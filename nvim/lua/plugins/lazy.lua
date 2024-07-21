@@ -53,7 +53,6 @@ require('lazy').setup({
   'mbbill/undotree',
   'folke/which-key.nvim',
   'lewis6991/gitsigns.nvim',
-  'tpope/vim-fugitive',
   'windwp/nvim-autopairs',
   {
     'echasnovski/mini.starter',
