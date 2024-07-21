@@ -6,5 +6,5 @@ Requirements:
     - a c compiler
 - tmux 3.0a or greater
     - tpm
-- oh-my-posh
+- oh-my-posh or starship.rc
 - Patched font of choice
