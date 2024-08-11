@@ -11,13 +11,12 @@ palette = "catppuccin_latte"
 
 format = """
 [┌](fg:surface2)\
+$username$hostname\
 $directory\
 $python\
 $conda\
 $git_branch$git_status\
 $status\
-$fill\
-$username$hostname\
 $line_break\
 [└](fg:surface2)\
 $character
@@ -66,18 +65,15 @@ signal_symbol = ''
 style = 'fg:maroon'
 disabled = false
 
-[fill]
-symbol = ' '
-
 [username]
 show_always = true
-style_user = "bg:crust fg:subtext0"
-format = '[ ](fg:crust)[$user]($style)'
+style_user = "fg:surface2"
+format = ' [\[]($style)[$user]($style)'
 
 [hostname]
 ssh_only = false
-style = "bg:crust fg:subtext0"
-format = '[@$hostname]($style)[](fg:crust)'
+style = "fg:surface2"
+format = '[@$hostname]($style)[\]]($style)'
 
 [character]
 success_symbol = '[ ](surface2)'
