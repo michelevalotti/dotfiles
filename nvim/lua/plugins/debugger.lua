@@ -1,69 +1,95 @@
 local dap = require('dap')
-local widgets = require('dap.ui.widgets')
-local mason_dap = require('mason-nvim-dap')
 dap.defaults.fallback.terminal_win_cmd = 'tabnew'
 
-mason_dap.setup({
-  automatic_setup = true,
-  handlers = {
-    function(config)
-      mason_dap.default_setup(config)
-    end,
-    python = function(config)
-      config.configurations = require('plugins.dbg_configs.python')
-      mason_dap.default_setup(config)
-    end,
-    cppdbg = function(config)
-      config.configurations = require('plugins.dbg_configs.c')
-      mason_dap.default_setup(config)
-    end,
-  },
-  ensure_installed = {},
-  automatic_installation = false,
-})
-
-vim.keymap.set('n', '<leader>dk', dap.continue)
-vim.keymap.set('n', '<leader>dn', function() dap.continue({new=true}) end)
-vim.keymap.set('n', '<leader>dl', dap.run_last)
-vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
-vim.keymap.set('n', '<leader>do', dap.step_over)
-vim.keymap.set('n', '<leader>di', dap.step_into)
-vim.keymap.set('n', '<leader>dK', function() vim.api.nvim_command('write'); dap.restart() end)
-vim.keymap.set('n', '<leader>dt', dap.terminate)
-vim.keymap.set('n', '<leader>dc', function() dap.repl.toggle({height=20}) end)
-vim.keymap.set('n', '<leader>dS', function() widgets.cursor_float(widgets.sessions) end)
-vim.keymap.set('n', '<leader>dF', dap.focus_frame)
-
-vim.api.nvim_create_autocmd( "FileType", {
-  pattern = "dap-float",
-  callback = function() vim.keymap.set('n', 'q', ':q<CR>', {silent=true, buffer=true}) end,
-})
-
-local sb = widgets.sidebar(widgets.scopes, {height=20}, "belowright 20split")
-vim.keymap.set({'n', 'v'}, '<Leader>ds', function()
-  sb.toggle()
-end)
-vim.keymap.set({'n', 'v'}, '<Leader>df', function()
-  widgets.centered_float(widgets.scopes)
-end)
-vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
-  widgets.hover()
-end)
-
-dap.listeners.after['event_exited']['close_repl'] = function ()
-  local n_sessions = 0
-  for _ in pairs(dap.sessions()) do n_sessions = n_sessions + 1 end
-  if n_sessions <= 1 then
-    dap.repl.close()
-  end
+local utils = require('utils')
+local configs_dir = vim.api.nvim_get_runtime_file("lua/dbg", false)[1]
+for _, adapter_name in ipairs(utils.list_dir(configs_dir .. '/dbg_adapters') or {}) do
+    adapter_name = string.sub(adapter_name, 1, -5)
+    dap.adapters[adapter_name] = require('dbg.dbg_adapters.' .. adapter_name)
+end
+for _, config_name in ipairs(utils.list_dir(configs_dir .. '/dbg_configs') or {}) do
+    config_name = string.sub(config_name, 1, -5)
+    dap.configurations[config_name] = require('dbg.dbg_configs.' .. config_name)
 end
 
-dap.listeners.after['event_initialized']['open_repl'] = function ()
-  vim.api.nvim_command('write')
-  dap.repl.open({height=20})
+vim.keymap.set('n', '<leader>dk', dap.continue, { desc = "Debugger Continue" })
+vim.keymap.set('n', '<leader>dn', function() dap.continue({ new = true }) end,
+    { desc = "Start additional debugging session" })
+vim.keymap.set('n', '<leader>dl', dap.run_last, { desc = "Debugger Run Last Session" })
+vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
+vim.keymap.set('n', '<leader>do', dap.step_over, { desc = "Debugger Step Over" })
+vim.keymap.set('n', '<leader>di', dap.step_into, { desc = "Debugger Step Into" })
+vim.keymap.set('n', '<F12>', dap.step_over, { desc = "Debugger Step Over" })
+vim.keymap.set('n', '<F11>', dap.step_into, { desc = "Debugger Step Into" })
+vim.keymap.set('n', '<leader>dK', function()
+    vim.api.nvim_command('write'); dap.restart()
+end, { desc = "Debugger Restart" })
+vim.keymap.set('n', '<leader>dt', dap.terminate, { desc = "Debugger Terminate" })
+vim.keymap.set('n', '<leader>dS',
+    function()
+        local widgets = require("dap.ui.widgets")
+        widgets.cursor_float(widgets.sessions)
+    end,
+    { desc = "List running sessions" })
+vim.keymap.set('n', '<leader>dF', dap.focus_frame, { desc = "Focus on current active session" })
+
+vim.keymap.set({ 'n', 'v' }, '<Leader>df',
+    function()
+        local widgets = require("dap.ui.widgets")
+        widgets.centered_float(widgets.scopes)
+    end,
+    { desc = "Debugger Open Scopes in Floating Window" })
+vim.keymap.set({ 'n', 'v' }, '<Leader>dh',
+    function()
+        require("dap.ui.widgets").hover(nil)
+    end,
+    { desc = "Debugger Open Hover Window" })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "dap-float",
+    callback = function() vim.keymap.set('n', 'q', ':q<CR>', { silent = true, buffer = true }) end,
+})
+
+vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointRejected', {
+    text = '',
+    texthl = 'DapUIBreakpointsDisabledLine',
+    linehl = '',
+    numhl =
+    ''
+})
+
+dap.listeners.after['event_exited']['close_repl'] = function()
+    local n_sessions = 0
+    for _ in pairs(dap.sessions()) do n_sessions = n_sessions + 1 end
+    if n_sessions <= 1 then
+        require("dap-view").close()
+    end
 end
 
-local gt_bp = require('goto-breakpoints')
-vim.keymap.set('n', ']b', gt_bp.next, {desc = 'Next breakpoint'})
-vim.keymap.set('n', '[b', gt_bp.prev, {desc = 'Previous breakpoint'})
-vim.keymap.set('n', ']S', gt_bp.stopped, {desc = 'Go to stopped debug line'})
+dap.listeners.after['event_initialized']['open_repl'] = function()
+    vim.api.nvim_command('write')
+    local dap_view = require("dap-view")
+    if package.loaded["dap-view"] == nil then
+        dap_view.setup({
+            winbar = {
+                default_section = "repl",
+            },
+            windows = {
+                size = 20,
+                position = "below",
+            },
+        })
+    end
+    dap_view.open()
+end
+
+vim.keymap.set('n', '<Leader>dv', function() require("dap-view").toggle() end, { desc = "Toggle Dap View" })
+vim.keymap.set({ 'n', 'v' }, '<Leader>dw', function() require("dap-view").add_expr() end,
+    { desc = "Watch expression under cursor or visual selection" })
+
+vim.keymap.set("x", "<leader>di", function()
+    local lines = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+    dap.repl.open()
+    dap.repl.execute(table.concat(lines, "\n"))
+end, { desc = "Evaluate visual selection in REPL" })

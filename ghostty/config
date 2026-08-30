@@ -1,0 +1,20 @@
+theme = Catppuccin Latte
+font-family = Hasklug Nerd Font Mono
+# fallback font
+font-family = Symbols Nerd Font Mono
+font-size = 12
+font-style = Regular
+# no ligatures
+font-feature = -calt
+# if true font size will not update on new window
+window-inherit-font-size = false
+cursor-style = block
+adjust-cell-width = -10%
+adjust-cell-height = -5%
+adjust-font-baseline = 30%
+window-padding-x = 10
+window-padding-y = 5
+window-padding-balance = true
+# hide cursor when typing in terminal
+shell-integration-features = no-cursor
+mouse-hide-while-typing = true
